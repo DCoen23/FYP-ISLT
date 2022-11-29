@@ -1,0 +1,17 @@
+.Title{
+    display: flex;
+    background: purple;
+    height: 630px;
+    padding-top: 5rem;
+    position: relative;
+}
+
+.Title .Container h1{
+    margin: 0;
+}
+
+.Title .islAlphabet{
+    height: 24%;
+    position: absolute;
+    
+}

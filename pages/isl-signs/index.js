@@ -1,6 +1,6 @@
 
 
-import islSigns from '../../components/meetups/islSigns'
+import islSigns from '../../components/clients/islSigns'
 function NewSignPage() {
     function addSignHandler(enteredSignData) {
     }

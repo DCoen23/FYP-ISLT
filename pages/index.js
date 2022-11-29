@@ -8,32 +8,32 @@
 // in order to get the database data.
 // We will fix this and provide a proper solution when we use the Contat API.
 
-import MeetupList from '../components/meetups/MeetupList'
+import ClientList from '../components/clients/ClientList'
 import { useState, useEffect } from "react";
 
 function HomePage() {
-    const [meetups, setMeetups] = useState(null);
+    const [clients, setClient] = useState(null);
 
     useEffect(() => {
-        getAllMeetings()
+        getAllClients()
     }, []);
 
-    async function getAllMeetings() {
-        const response = await fetch('/api/get-meetings', {
+    async function getAllClients() {
+        const response = await fetch('/api/get-clients', {
             method: 'POST',
-            body: JSON.stringify({meetups: 'all'}),
+            body: JSON.stringify({clients: 'all'}),
             headers: {
                 'Content-Type': 'application/json'
             }
         });
         let data = await response.json();
-        setMeetups(data.meetings);
+        setClient(data.clients);
     }
 
-    if (meetups == null) {
+    if (clients == null) {
         return null
     } else {
-    return <MeetupList meetups={meetups} />
+    return <ClientList clients={clients} />
     }
 }
 

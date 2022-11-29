@@ -1,0 +1,12 @@
+{
+  "/_app": "pages/_app.js",
+  "/[meetupId]": "pages/[meetupId].html",
+  "/api/get-meetings": "pages/api/get-meetings.js",
+  "/api/new-meetup": "pages/api/new-meetup.js",
+  "/": "pages/index.html",
+  "/isl-signs": "pages/isl-signs.html",
+  "/new-meetup": "pages/new-meetup.html",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/404": "pages/404.html"
+}

@@ -2,10 +2,10 @@ const NavLinks= (props) =>{
     return(
         <ul>
           <li onclick={()=> props.isNav&&props.closeNavMenu()}>
-            <a href='/'>All Meetups</a>            
+            <a href='/'>All Clients</a>            
           </li>
           <li onclick={()=> props.isNav&&props.closeNavMenu()}>
-            <a href='/new-meetup'>Add New Meetup</a>
+            <a href='/new-client'>Add New Client</a>
           </li>
           <li onclick={()=> props.isNav&&props.closeNavMenu()}>
             <a href='/isl-signs'>Sign Language</a>            

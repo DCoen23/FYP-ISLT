@@ -8,6 +8,7 @@ function Layout(props) {
     <div>
       <Popup hide={popupHide}/>
       <MainNavigation />
+      
       <main className={classes.main}>{props.children}</main>
     </div>
   );

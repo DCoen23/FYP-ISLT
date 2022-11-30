@@ -1,8 +1,20 @@
 import classes from "./Popup.module.css"
 import { useState } from 'react'
- 
 export default function Popup(props) {
   let [hideMe, setHideMe] = useState(false)
+ 
+  function validation() {
+    let username = document.getElementById("username").value
+    let password = document.getElementById("password").value
+    if(username == 'cian' && password == 'cian12345' ){
+      setHideMe(true)
+      console.log('correct sign in')
+    }
+    else{
+      setHideMe(false)
+      console.log('incorrect sign in')
+    }
+  }
   if(props.hide) { /* Move the show / hide code to the component itself: */
     return null
   }
@@ -10,23 +22,31 @@ export default function Popup(props) {
     return null
   }
   return (
-    <div className={classes.mainDiv} onClick={() => setHideMe(true)} >
+    <div className={classes.mainDiv} >
       <div className={classes.greyBackground}></div>
       <div className={classes.thePopup}>
-        <p> X</p>
-          <h1>Sign In</h1>
-          <div className={classes.control}>
-          <label htmlFor='title'>Email</label>
-          <input type='text' required id='title' />
+        <div className={classes.exit} onClick={() => setHideMe(true)}>
+        <h1>X</h1>
         </div>
-        <div className={classes.control}>
-          <label htmlFor='title'>Password</label>
-          <input type='text' required id='title' />
-        </div>
-        <div className={classes.actions}>
-          <button>Login</button>
+       <div className={classes.log}>
+        <form>
+          <h2 className="sign-in">Please sign in</h2>
+          <div >
+            <input type="text" id="username" placeholder="name@example.com" />
+            <label htmlFor="floatingInput"></label>
+          </div>
+          <div >
+            <input type="password" id="password" placeholder="Password" />
+            <label htmlFor="floatingPassword"></label>
+          </div>
+          <div className={classes.checkbox}>
+            <label>
+              <input type="checkbox" value="remember-me" />Remember me</label>
+          </div>
+          <button type="submit" onClick={() => validation()}>Sign in</button>
+        </form>
         </div>
       </div>
-    </div>
+      </div>
   )
 }

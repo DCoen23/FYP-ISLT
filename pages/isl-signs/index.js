@@ -1,6 +1,5 @@
-
-
 import islSigns from '../../components/clients/islSigns'
+
 function NewSignPage() {
     function addSignHandler(enteredSignData) {
     }

@@ -7,7 +7,7 @@ function MainNavigation() {
   return (
     
     <header className={classes.header}>
-      <div className={classes.logo}>Pretty Cool Right</div>
+      <div className={classes.logo} href='/isl-signs'>ISLT</div>
       <div className={classes.mainDiv} onClick={() => props.toggleMenuHide()}></div>
       <Navigation/>
     </header>

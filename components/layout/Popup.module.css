@@ -6,34 +6,51 @@
   top: 0px;
   z-index: 50;
 }
+
 .greyBackground {
   width: 100%;
   height: 100%;
-  background-color: grey;
-  opacity: 0.6;
+  background-color:  #1a2920;
+  opacity: .90;
 }
+
 .thePopup {
-  background-color: white;
+  background-color: rgb(157, 158, 157);
   width: 40%;
-  height: 30%;
+  height: 25%;
   position: absolute;
   left: 30%;
   top: 35%;
+  text-align: center;
 }
+
 .thePopup h1{
-  text-align: center;
+  padding-right: 5px;
+  float: right;
+  text-align: right;
+  justify-content: flex-start;
 }
-.thePopup p{
-  text-align: left;
+
+.thePopup h1:hover {
+  float: right;
+  background-color: #c20e0e;
+  text-align: right;
+ 
 }
-.thePopup p:hover{
-  background-color: rgb(163, 20, 20);
-  width: 2.5%;
+
+.signbtn{
+  position: fixed;
+  left: 48%;
+  text-decoration: bold;
+  cursor: pointer;
 }
-.control{
-  text-align: center;
+
+.signbtn:hover {
+  background-color:rgb(225, 226, 225);;
+  text-decoration: underline;
 }
-.actions {
-  margin-top: 1rem;
+
+.log{
+  padding-top: 5%;
   text-align: center;
 }

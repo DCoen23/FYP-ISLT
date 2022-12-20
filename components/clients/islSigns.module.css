@@ -1,8 +1,7 @@
 .Title{
     display: flex;
-    background: purple;
-    height: 630px;
-    padding-top: 5rem;
+    padding: 10rem;
+    height: 800px;
     position: relative;
 }
 
@@ -11,7 +10,7 @@
 }
 
 .Title .islAlphabet{
-    height: 24%;
+    height: 100%;
     position: absolute;
     
 }

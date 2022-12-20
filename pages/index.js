@@ -8,33 +8,33 @@
 // in order to get the database data.
 // We will fix this and provide a proper solution when we use the Contat API.
 
-import ClientList from '../components/clients/ClientList'
+// import ClientList from '../components/clients/ClientList'
 import { useState, useEffect } from "react";
 
 function HomePage() {
-    const [clients, setClient] = useState(null);
+    // const [clients, setClient] = useState(null);
 
-    useEffect(() => {
-        getAllClients()
-    }, []);
+    // useEffect(() => {
+    //     getAllClients()
+    // }, []);
 
-    async function getAllClients() {
-        const response = await fetch('/api/get-clients', {
-            method: 'POST',
-            body: JSON.stringify({clients: 'all'}),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        let data = await response.json();
-        setClient(data.clients);
-    }
+    // async function getAllClients() {
+    //     const response = await fetch('/api/get-clients', {
+    //         method: 'POST',
+    //         body: JSON.stringify({clients: 'all'}),
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         }
+    //     });
+    //     let data = await response.json();
+    //     setClient(data.clients);
+    // }
 
-    if (clients == null) {
-        return null
-    } else {
-    return <ClientList clients={clients} />
-    }
+    // if (clients == null) {
+    //     return null
+    // } else {
+    // return <ClientList clients={clients} />
+    // }
 }
 
 export default HomePage;

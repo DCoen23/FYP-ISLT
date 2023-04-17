@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import HomeScreen from './pages/Home'
 import SignScreen from './pages/sign'
 import * as React from 'react';
+
 import { NavigationContainer, DrawerActions } from '@react-navigation/native';
 import {
   createDrawerNavigator,
@@ -16,7 +17,7 @@ function CustomDrawerContent(props) {
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />     
-    </DrawerContentScrollView>
+    </DrawerContentScrollView> 
   );
 }
   
@@ -36,8 +37,6 @@ function MyDrawer() {
           headerStyle: {
             backgroundColor: '#009900',
             height: 100,
-            alignItems: 'center',
-            justifyContent: 'center'
           },
           headerTintColor: '#FFFFFF',
         }}
@@ -50,8 +49,6 @@ function MyDrawer() {
           headerStyle: {
             backgroundColor: '#009900',
             height: 100,
-            alignItems: 'center',
-            justifyContent: 'center'
           },
           headerTintColor: '#FFFFFF',
         }}

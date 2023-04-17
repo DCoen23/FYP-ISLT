@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet } from 'react-native';
-import { ImgPicker } from './ImagePicker';
+import { ImgPicker } from '../components/ImagePicker';
 
 const HomeScreen = ({ navigation }) => {
 

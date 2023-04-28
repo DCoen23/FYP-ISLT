@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import { View, Button, Image, Text, StyleSheet, Alert } from 'react-native';
+import {  View,  Button,  Image,  Text,  StyleSheet,  Alert} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import * as MediaLibrary from 'expo-media-library';
+import * as ImageManipulator from 'expo-image-manipulator';
+import * as FileSystem from 'expo-file-system';
 
-export const ImgPicker = props => {
+const { cacheDirectory } = FileSystem;
+const ImgPicker = (props) => {
   const [pickedImage, setPickedImage] = useState();
+  const [predictedLabel, setPredictedLabel] = useState('');
 
   const verifyPermissions = async () => {
-    const result = await Permissions.askAsync( Permissions.CAMERA_ROLL, Permissions.CAMERA)
-    let succss = false
-    if (result.status == 'granted') succss = true
-    if(result.permissions )
-    if(result.permissions.camera.status == 'granted') succss = true
-    console.log('result: ' + JSON.stringify(result))
+    const result = await Permissions.askAsync(
+      Permissions.CAMERA_ROLL,
+      Permissions.CAMERA
+    );
+
     if (result.status !== 'granted') {
       Alert.alert(
         'Insufficient permissions!',
@@ -30,19 +32,58 @@ export const ImgPicker = props => {
     if (!hasPermission) {
       return;
     }
-    const image = await ImagePicker.launchCameraAsync({
+  
+    const image = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [16, 9],
-      quality: 0.5
+      quality: 0.5,
     });
-    
-    if (!image.cancelled) {
-      // Save the image to the camera roll
-      await MediaLibrary.saveToLibraryAsync(image.uri);
-    }
   
-    setPickedImage(image.uri);
+    if (!image.cancelled) {
+      const label = await predict(image.uri);
+      setPredictedLabel(label);
+      setPickedImage(image.uri);
+    }
+  };  
+
+  const predict = async (imageUri) => {
+    const resizedImage = await ImageManipulator.manipulateAsync(
+      imageUri,
+      [{ resize: { width: 300, height: 300 } }],
+      { format: ImageManipulator.SaveFormat.JPEG, compress: 1, base64: true }
+    );
+  
+    const base64Content = resizedImage.base64;
+  
+    const imagePayload = {
+      data: base64Content,
+    };
+  
+    try {
+      const response = await fetch('http://192.168.1.9:5000/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(imagePayload),
+      });
+  
+      if (!response.ok) {
+        console.error(`Server responded with status ${response.status}`);
+        const text = await response.text();
+        console.error(`Server response: ${text}`);
+        return null;
+      }
+  
+      const result = await response.json();
+      console.log(result);
+      return result.label;
+    } catch (error) {
+      console.error("Error in predict function: ", error);
+      return null;
+    }
   };
+  
 
   return (
     <View style={styles.imagePicker}>
@@ -50,12 +91,15 @@ export const ImgPicker = props => {
         {!pickedImage ? (
           <Text>No image picked yet.</Text>
         ) : (
-          <Image style={styles.image} source={{ uri: pickedImage }} />
+          <>
+            <Image style={styles.image} source={{ uri: pickedImage }} />
+            <Text>Predicted label: {predictedLabel}</Text>
+          </>
         )}
       </View>
-      <Button style={styles.imagePicker} 
+      <Button
         title="Take Image"
-        color={'#444'}
+        color="#444"
         onPress={takeImageHandler}
       />
     </View>

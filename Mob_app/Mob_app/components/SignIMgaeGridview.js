@@ -5,8 +5,8 @@ import AWS from 'aws-sdk';
 // Configure AWS SDK
 AWS.config.update({
   region: 'eu-west-1',
-  accessKeyId: 'AKIAR3MSCLT2CDXKTO4L',
-  secretAccessKey: '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',
+  accessKeyId: 'Access key',
+  secretAccessKey: 'Seceret key',
 });
 
 const data = [

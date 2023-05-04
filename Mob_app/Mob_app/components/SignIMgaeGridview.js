@@ -1,37 +1,63 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, FlatList } from 'react-native';
+import AWS from 'aws-sdk';
+
+// Configure AWS SDK
+AWS.config.update({
+  region: 'eu-west-1',
+  accessKeyId: 'AKIAR3MSCLT2CDXKTO4L',
+  secretAccessKey: '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',
+});
 
 const data = [
-  {
-    id: 1,
-    image: require('../assets/Rock.jpg'),
-    text: 'Rock',
-  },
-  {
-    id: 2,
-    image: require('../assets/Paper.jpg'),
-    text: 'Paper',
-  },
-  {
-    id: 3,
-    image: require('../assets/scissors.jpg'),
-    text: 'scissors',
-  },
-  // Add more image/text data as needed
+  { id: 1, imageKey: 'ISL_pic/A_isl.jpg', text: 'A' },
+  { id: 2, imageKey: 'ISL_pic/B_isl.jpg', text: 'B' },
+  { id: 3, imageKey: 'ISL_pic/C_isl.jpg', text: 'C' },
+  { id: 4, imageKey: 'ISL_pic/D_isl.jpg', text: 'D' },
 ];
 
-const GridImages = () => {
-  const renderItem = ({ item }) => (
+const getSignedUrl = async (imageKey) => {
+  const s3 = new AWS.S3();
+  const params = {
+    Bucket: 'isltbucket',
+    Key: imageKey,
+    Expires: 60 * 5, 
+  };
+
+  try {
+    const signedUrl = await s3.getSignedUrlPromise('getObject', params);
+    return signedUrl;
+  } catch (error) {
+    console.error('Error fetching image from S3:', error);
+    return null;
+  }
+};
+
+const GridItem = ({ item }) => {
+  const [imageUrl, setImageUrl] = useState(null);
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      const signedUrl = await getSignedUrl(item.imageKey);
+      setImageUrl(signedUrl);
+    };
+
+    fetchImage();
+  }, [item.imageKey]);
+
+  return (
     <View style={styles.item}>
-      <Image source={item.image} style={styles.image} />
+      {imageUrl && <Image source={{ uri: imageUrl }} style={styles.image} />}
       <Text style={styles.text}>{item.text}</Text>
     </View>
   );
+};
 
+const GridImages = () => {
   return (
     <FlatList
       data={data}
-      renderItem={renderItem}
+      renderItem={({ item }) => <GridItem item={item} />}
       keyExtractor={item => item.id.toString()}
       numColumns={2} // You can adjust the number of columns here
       contentContainerStyle={styles.container}

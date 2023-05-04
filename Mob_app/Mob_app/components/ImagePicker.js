@@ -87,21 +87,19 @@ const ImgPicker = (props) => {
 
   return (
     <View style={styles.imagePicker}>
+      <View style={styles.predictionContainer}>
+        <Text style={styles.predictionText}>
+          Predicted label: {predictedLabel}
+        </Text>
+      </View>
       <View style={styles.imagePreview}>
         {!pickedImage ? (
           <Text>No image picked yet.</Text>
         ) : (
-          <>
-            <Image style={styles.image} source={{ uri: pickedImage }} />
-            <Text>Predicted label: {predictedLabel}</Text>
-          </>
+          <Image style={styles.image} source={{ uri: pickedImage }} />
         )}
       </View>
-      <Button
-        title="Take Image"
-        color="#444"
-        onPress={takeImageHandler}
-      />
+      <Button title="Take Image" color="#444" onPress={takeImageHandler} />
     </View>
   );
 };
@@ -111,7 +109,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: '100%'
+    height: '100%',
+  },
+  predictionContainer: {
+    marginBottom: 20,
+  },
+  predictionText: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   imagePreview: {
     width: '100%',
@@ -120,12 +125,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: '#ccc',
-    borderWidth: 1
+    borderWidth: 1,
   },
   image: {
     width: '100%',
-    height: '100%'
-  }
+    height: '100%',
+  },
 });
+
 
 export default ImgPicker;
